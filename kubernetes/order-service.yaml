@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: order-service
-        image: project_order-service:latest
+        image: yashwanthreddy1232/project_order-service:latest
         ports:
         - containerPort: 8003
         env:
