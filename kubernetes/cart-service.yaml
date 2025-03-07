@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cart-service
-        image: project_cart-service:latest
+        image: yashwanthreddy1232/project_cart-service:latest
         ports:
         - containerPort: 8004
         env:
