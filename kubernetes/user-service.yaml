@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: user-service:latest
+        image: project_user-service:latest
         ports:
         - containerPort: 8002
         env:
