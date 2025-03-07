@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  product-service:
+    build: ./services/product-service
+    ports:
+      - "8001:8001"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/product-service
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "8002:8002"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/user-service
+      - JWT_SECRET=your_jwt_secret_key
+
+  order-service:
+    build: ./services/order-service
+    ports:
+      - "8003:8003"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/order-service
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+
+  cart-service:
+    build: ./services/cart-service
+    ports:
+      - "8004:8004"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URI=redis://redis:6379
+
+  payment-service:
+    build: ./services/payment-service
+    ports:
+      - "8005:8005"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/payment-service
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  mongodb_data:
+  redis_data:
