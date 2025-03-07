@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: product-service
-        image: product-service:latest
+        image: project_product-service:latest
         ports:
         - containerPort: 8001
         env:
